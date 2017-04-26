@@ -31,8 +31,12 @@ $('#back').click(function(){
 	i = i - 1;
 
 	SC.stream('/tracks/' + trackIds[i]).then(function(player){
+		if (scPlayer.options.protocols[0] === 'rtmp'){
+			scPlayer.options.protocols.splice(0,1);
+		}
 		outerPlayer = player;
 		player.play();
+
 	
 	artistName = $('.artist-name')
 	songTitle = $('.song-title')
@@ -42,6 +46,10 @@ $('#back').click(function(){
 
 	artistName.append($('#search')[0].value)
 	songTitle.append(outerTracks[i].title)
+
+	img = $('song-image')
+	img[0].src = outerTracks[i].artwork_url;
+	$('body').append(img)
 	});
 })
 
